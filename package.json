@@ -8,9 +8,12 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
+    "lint": "eslint .",
     "server": "verdaccio --config ./verdaccio-server/config.yml"
   },
   "devDependencies": {
+    "@clark/eslint-config-node": "^1.4.1",
+    "eslint": "^6.0.1",
     "verdaccio": "^4.1.0"
   }
 }
