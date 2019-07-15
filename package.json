@@ -6,5 +6,11 @@
   "repository": "https://github.com/ClarkSource/verdaccio-oidc",
   "author": "Jan Buschtöns <jan.buschtoens@clark.de> (https://jan.buschtoens.me)",
   "license": "UNLICENSED",
-  "private": true
+  "private": true,
+  "scripts": {
+    "server": "verdaccio --config ./verdaccio-server/config.yml"
+  },
+  "devDependencies": {
+    "verdaccio": "^4.1.0"
+  }
 }
