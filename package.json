@@ -8,12 +8,17 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint --ext ts,js .",
     "server": "verdaccio --config ./verdaccio-server/config.yml"
   },
   "devDependencies": {
-    "@clark/eslint-config-node": "^1.4.1",
+    "@clark/eslint-config-node-typescript": "^1.4.1",
+    "dotenv": "^8.0.0",
     "eslint": "^6.0.1",
+    "typescript": "^3.5.3",
     "verdaccio": "^4.1.0"
+  },
+  "dependencies": {
+    "openid-client": "^3.2.2"
   }
 }
