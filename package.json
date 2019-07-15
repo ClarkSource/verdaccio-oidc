@@ -1,0 +1,10 @@
+{
+  "name": "verdaccio-oidc",
+  "version": "0.0.0",
+  "description": "OpenID Connect authentication plugin for Verdaccio",
+  "main": "index.js",
+  "repository": "https://github.com/ClarkSource/verdaccio-oidc",
+  "author": "Jan Buschtöns <jan.buschtoens@clark.de> (https://jan.buschtoens.me)",
+  "license": "UNLICENSED",
+  "private": true
+}
