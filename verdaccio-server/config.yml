@@ -6,6 +6,9 @@
 # https://github.com/verdaccio/verdaccio/tree/master/conf
 #
 
+# use non-default port to not interfere with other local Verdaccio instances.
+listen: 0.0.0.0:5266
+
 # path to a directory with all packages
 storage: ./storage
 # path to a directory with plugins to include
