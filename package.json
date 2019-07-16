@@ -2,6 +2,14 @@
   "name": "verdaccio-oidc",
   "version": "0.0.0",
   "description": "OpenID Connect authentication plugin for Verdaccio",
+  "keywords": [
+    "verdaccio",
+    "verdaccio-plugin",
+    "auth",
+    "authentication",
+    "openid",
+    "oidc"
+  ],
   "main": "index.js",
   "repository": "https://github.com/ClarkSource/verdaccio-oidc",
   "author": "Jan Buschtöns <jan.buschtoens@clark.de> (https://jan.buschtoens.me)",
@@ -19,6 +27,14 @@
     "verdaccio": "^4.1.0"
   },
   "dependencies": {
-    "openid-client": "^3.2.2"
+    "body-parser": "^1.19.0",
+    "client-sessions": "^0.8.0",
+    "express-session": "^1.16.2",
+    "http-errors": "^1.7.3",
+    "http-errors-express": "^3.1.0",
+    "memorystore": "^1.6.1",
+    "openid-client": "^3.2.2",
+    "p-defer": "^3.0.0",
+    "p-timeout": "^3.1.0"
   }
 }

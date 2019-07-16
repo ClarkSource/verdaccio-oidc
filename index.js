@@ -1,9 +1,21 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/camelcase */
 require('dotenv').config();
 
 const { debuglog } = require('util');
 const debug = debuglog('verdaccio-oidc');
 
 const { Issuer, generators } = require('openid-client');
+
+const bodyParser = require('body-parser');
+const httpErrors = require('http-errors-express').default;
+const session = require('./lib/middleware/session');
+const tokenParser = require('./lib/middleware/token-parser');
+
+const createError = require('http-errors');
+
+const Deferreds = require('./lib/deferreds');
+const getRandomToken = require('./lib/utils/token');
 
 const { OIDC_ISSUER_URL, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET } = process.env;
 
@@ -24,8 +36,7 @@ class VerdaccioOIDCPlugin {
     // verdaccio logger
     this._logger = stuff.logger;
 
-    // pass verdaccio logger to ldapauth
-    this._config.client_options.log = stuff.logger;
+    this.deferreds = new Deferreds(1000 * 30);
 
     this.boot();
   }
@@ -36,37 +47,115 @@ class VerdaccioOIDCPlugin {
     this.client = new Client({
       client_id: OIDC_CLIENT_ID,
       client_secret: OIDC_CLIENT_SECRET,
-      redirect_uris: ['http://localhost:5000/cb'],
-      response_types: ['id_token']
-    });
-
-    this.nonce = generators.nonce();
-  }
-
-  authenticate(user, password, callback) {
-    const LdapClient = new LdapAuth(self._config.client_options);
-    LdapClient.authenticate(user, password, function(error, ldapUser) {
-      let groups;
-      callback(null, groups);
+      response_types: ['code']
     });
   }
 
-  // eslint-disable-next-line camelcase
+  authenticate(user, password, callback) {}
+
   register_middlewares(app, auth, storage) {
-    app.use('/oauth/authorize', (request, res) =>
-      res.redirect(this.getAuthorizationURL())
+    app.use('/-/oidc', httpErrors(), session);
+
+    app.use('/-/oidc/authorize', (request, res) => {
+      this.createSession(request);
+      res.redirect(request.session.authorizationUrl);
+    });
+
+    app.use(
+      '/-/oidc/callback',
+      bodyParser.urlencoded({ extended: false }),
+      async (request, res, next) => {
+        const params = this.client.callbackParams(request);
+        const { callbackURL, codeVerifier, nonce, npmToken } = request.session;
+
+        const tokenSet = await this.client.callback(callbackURL, params, {
+          nonce,
+          code_verifier: codeVerifier
+        });
+
+        this.deferreds.resolve(npmToken, tokenSet);
+
+        res.json({
+          tokenSet,
+          claims: tokenSet.claims(),
+          userinfo: await this.client.userinfo(tokenSet.id_token),
+          refresh: await this.client.refresh(tokenSet.refresh_token),
+          npmToken
+        });
+      }
     );
 
-    app.use('/oauth/callback', (request, res, next) => {});
+    app.use(
+      '/-/user/org.couchdb.user:*',
+      bodyParser.json(),
+      async (request, res) => {
+        console.log(request.body);
+
+        const token = await getRandomToken();
+
+        res.json({ token, sso: this.getInitializationURL(token, request) });
+      }
+    );
+
+    app.use(
+      '/-/whoami',
+      tokenParser(false),
+      bodyParser.urlencoded({ extended: false }),
+      async (request, res, next) => {
+        if (!request.token) return next();
+
+        let tokenSet;
+        try {
+          tokenSet = await this.deferreds.waitFor(request.token);
+        } catch (error) {
+          return next(createError(401, 'SSO client did not respond in time.'));
+        }
+
+        const claims = tokenSet.claims();
+
+        res.json({ username: claims.preferred_username, claims, tokenSet });
+      }
+    );
   }
 
-  getAuthorizationURL() {
+  createSession(request) {
+    const { session, query } = request;
+
+    session.npmToken = query.npmToken;
+    session.callbackURL = this.getCallbackURL(request);
+    session.codeVerifier = generators.codeVerifier();
+    session.codeChallenge = generators.codeChallenge(session.codeVerifier);
+    session.nonce = generators.nonce();
+    session.authorizationUrl = this.getAuthorizationURL(session);
+  }
+
+  buildURL(path, request) {
+    const protocol = request.headers['x-forwarded-proto'] || request.protocol;
+    const { host } = request.headers;
+    return `${protocol}://${host}${path}`;
+  }
+
+  getCallbackURL(request) {
+    return this.buildURL('/-/oidc/callback', request);
+  }
+
+  getInitializationURL(token, request) {
+    return this.buildURL(
+      `/-/oidc/authorize?npmToken=${encodeURIComponent(token)}`,
+      request
+    );
+  }
+
+  getAuthorizationURL({ callbackURL, codeChallenge, nonce }) {
     return this.client.authorizationUrl({
-      scope: 'openid email profile',
+      redirect_uri: callbackURL,
+      scope: 'openid profile groups email',
       response_mode: 'form_post',
-      nonce: this.nonce
+      code_challenge: codeChallenge,
+      code_challenge_method: 'S256',
+      nonce
     });
   }
 }
 
-module.exports = VerdaccioOIDCPlugin;
+module.exports.default = VerdaccioOIDCPlugin;

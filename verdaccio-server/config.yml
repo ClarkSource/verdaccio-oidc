@@ -12,7 +12,7 @@ listen: 0.0.0.0:5266
 # path to a directory with all packages
 storage: ./storage
 # path to a directory with plugins to include
-plugins: ./plugins
+plugins: ../
 
 web:
   title: Verdaccio
@@ -22,11 +22,14 @@ web:
   # sort_packages: asc
 
 auth:
-  htpasswd:
-    file: ./htpasswd
-    # Maximum amount of users allowed to register, defaults to "+inf".
-    # You can set this to -1 to disable registration.
-    # max_users: 1000
+  oidc:
+    enabled: true
+
+middlewares:
+  oidc:
+    enabled: true
+  audit:
+    enabled: true
 
 security:
   api:
@@ -73,10 +76,6 @@ packages:
 # WORKAROUND: Through given configuration you can workaround following issue https://github.com/verdaccio/verdaccio/issues/301. Set to 0 in case 60 is not enought.
 server:
   keepAliveTimeout: 60
-
-middlewares:
-  audit:
-    enabled: true
 
 # log settings
 logs:
