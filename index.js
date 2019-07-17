@@ -7,11 +7,11 @@ const fs = require('fs');
 // Otherwise, register ts-node if necessary and load from source.
 if (fs.existsSync(`${__dirname}/dist/addon.js`)) {
   // eslint-disable-next-line node/no-missing-require
-  module.exports = require('./dist');
+  module.exports = require('./dist').default;
 } else {
   // eslint-disable-next-line node/no-unpublished-require
   require('./dev/register-ts-node');
 
   // eslint-disable-next-line node/no-unpublished-require
-  module.exports = require('./src/index.ts');
+  module.exports = require('./src/index.ts').default;
 }
