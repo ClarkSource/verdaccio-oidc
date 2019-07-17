@@ -17,10 +17,12 @@
   "scripts": {
     "lint:js": "eslint --ext ts,js .",
     "lint:types": "tsc --noEmit",
-    "server": "verdaccio --config ./verdaccio-server/config.yml"
+    "server": "verdaccio --config ./test-support/verdaccio-server/config.yml"
   },
   "devDependencies": {
     "@clark/eslint-config-node-typescript": "^1.4.1",
+    "@types/node": "^12.6.6",
+    "@verdaccio/types": "^5.3.0",
     "dotenv": "^8.0.0",
     "eslint": "^6.0.1",
     "ts-node": "^8.3.0",

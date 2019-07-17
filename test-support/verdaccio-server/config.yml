@@ -12,7 +12,7 @@ listen: 0.0.0.0:5266
 # path to a directory with all packages
 storage: ./storage
 # path to a directory with plugins to include
-plugins: ../
+plugins: ./test-support/verdaccio-server/plugins
 
 web:
   title: Verdaccio
