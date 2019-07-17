@@ -10,6 +10,7 @@ import {
 import { VerdaccioOIDCMiddleware } from './middleware';
 import bind from 'bind-decorator';
 import assert from 'assert';
+import { callbackify } from '../utils/decorators/callbackify';
 
 /**
  * Since we don't opt in to the config merging madness, that is further detailed
@@ -116,15 +117,12 @@ export class VerdaccioOIDCPlugin
     storage: IStorageManager<VerdaccioPluginConfig>
   ): void {
     this.middleware = new VerdaccioOIDCMiddleware();
-    app.use(this.middleware.callback());
+    // app.use(this.middleware.callback());
   }
 
-  authenticate(
-    user: string,
-    password: string,
-    callback: (error: Error | null, groups: string[]) => void
-  ): void {
-    throw new Error('Method not implemented.');
+  @callbackify
+  async authenticate(user: string, password: string): Promise<string[]> {
+    return ['whoop'];
   }
 
   version?: string | undefined;
