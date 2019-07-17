@@ -13,8 +13,7 @@
   "main": "index.js",
   "repository": "https://github.com/ClarkSource/verdaccio-oidc",
   "author": "Jan Buschtöns <jan.buschtoens@clark.de> (https://jan.buschtoens.me)",
-  "license": "UNLICENSED",
-  "private": true,
+  "license": "ISC",
   "scripts": {
     "lint": "eslint --ext ts,js .",
     "server": "verdaccio --config ./verdaccio-server/config.yml"
