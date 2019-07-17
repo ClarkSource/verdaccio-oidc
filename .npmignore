@@ -94,5 +94,8 @@ typings/
 
 # End of https://www.gitignore.io/api/node
 
-# Compiled TS distributables
-/dist/
+# TypeScript source
+/src/
+
+# Development support
+/dev/

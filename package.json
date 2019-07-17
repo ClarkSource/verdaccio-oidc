@@ -15,13 +15,15 @@
   "author": "Jan Buschtöns <jan.buschtoens@clark.de> (https://jan.buschtoens.me)",
   "license": "ISC",
   "scripts": {
-    "lint": "eslint --ext ts,js .",
+    "lint:js": "eslint --ext ts,js .",
+    "lint:types": "tsc --noEmit",
     "server": "verdaccio --config ./verdaccio-server/config.yml"
   },
   "devDependencies": {
     "@clark/eslint-config-node-typescript": "^1.4.1",
     "dotenv": "^8.0.0",
     "eslint": "^6.0.1",
+    "ts-node": "^8.3.0",
     "typescript": "^3.5.3",
     "verdaccio": "^4.1.0"
   },
