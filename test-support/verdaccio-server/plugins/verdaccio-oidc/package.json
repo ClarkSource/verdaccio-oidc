@@ -2,5 +2,5 @@
   "name": "verdaccio-oidc",
   "version": "0.0.0",
   "description": "OpenID Connect authentication plugin for Verdaccio",
-  "main": "../../../index.js"
+  "main": "../../../../index.js"
 }
