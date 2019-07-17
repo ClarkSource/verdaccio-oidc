@@ -117,12 +117,12 @@ export class VerdaccioOIDCPlugin
     storage: IStorageManager<VerdaccioPluginConfig>
   ): void {
     this.middleware = new VerdaccioOIDCMiddleware();
-    // app.use(this.middleware.callback());
+    app.use(this.middleware.callback());
   }
 
   @callbackify
   async authenticate(user: string, password: string): Promise<string[]> {
-    return ['whoop'];
+    throw new Error('Method not implemented.');
   }
 
   version?: string | undefined;
