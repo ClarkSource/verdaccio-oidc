@@ -1,5 +1,7 @@
 'use strict';
 
+require('hard-rejection/register');
+
 // eslint-disable-next-line node/no-deprecated-api
 if (!require.extensions['.ts']) {
   const options = {

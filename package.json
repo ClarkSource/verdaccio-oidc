@@ -1,7 +1,7 @@
 {
   "name": "verdaccio-oidc",
   "version": "0.0.0",
-  "description": "OpenID Connect authentication plugin for Verdaccio",
+  "description": "OpenID Connect authentication  plugin for Verdaccio",
   "keywords": [
     "verdaccio",
     "verdaccio-plugin",
@@ -21,20 +21,31 @@
   },
   "devDependencies": {
     "@clark/eslint-config-node-typescript": "^1.4.1",
-    "@types/koa": "^2.0.49",
+    "@types/express": "^4.17.0",
+    "@types/http-errors": "^1.6.1",
     "@types/node": "^12.6.6",
+    "@types/openid-client": "^3.1.3",
+    "@types/redis": "^2.8.13",
     "@verdaccio/types": "^5.3.0",
     "dotenv": "^8.0.0",
     "eslint": "^6.0.1",
+    "hard-rejection": "^2.1.0",
     "ts-node": "^8.3.0",
     "type-fest": "^0.6.0",
     "typescript": "^3.5.3",
     "verdaccio": "^4.1.0"
   },
   "dependencies": {
+    "async-middleware": "^1.2.1",
     "bind-decorator": "^1.0.11",
-    "koa": "^2.7.0",
-    "openid-client": "^3.2.2"
+    "express": "^4.17.1",
+    "http-errors": "^1.7.3",
+    "openid-client": "^3.2.2",
+    "p-defer": "^3.0.0",
+    "p-props": "^3.0.1",
+    "p-timeout": "^3.1.0",
+    "pascal-case": "^2.0.1",
+    "redis": "^2.8.0"
   },
   "engines": {
     "node": ">= 8.2.0"

@@ -23,14 +23,17 @@ web:
 
 auth:
   oidc:
-    middlewares: []
-    enabled: true
-    type: auth
+    issuerURL: http://localost:5267/metadata
+    clientID: 123456
+    clientSecret: abcdef
+    store:
+      pendingAuthorizationTimeout: 60000
+      adapter:
+        memory:
 
 middlewares:
   oidc:
-    enabled: true
-    type: middleware
+    requestTimeout: 2000
   audit:
     enabled: true
 

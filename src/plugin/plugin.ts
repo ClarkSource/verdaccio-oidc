@@ -7,10 +7,14 @@ import {
   Config as VerdaccioConfig,
   Logger
 } from '@verdaccio/types';
-import { VerdaccioOIDCMiddleware } from './middleware';
+import express from 'express';
+import { middleware } from '../middleware';
 import bind from 'bind-decorator';
 import assert from 'assert';
 import { callbackify } from '../utils/decorators/callbackify';
+import { OIDCController, OIDCControllerConfig } from '../oidc-controller';
+import { AuthenticationStore, AuthenticationStoreConfig } from '../auth/store';
+import { MiddlewareConfig } from '../middleware';
 
 /**
  * Since we don't opt in to the config merging madness, that is further detailed
@@ -25,12 +29,19 @@ import { callbackify } from '../utils/decorators/callbackify';
 type VerdaccioPluginConfig = PluginOptions<{}>;
 
 /**
+ * The config of the `auth` section for `oidc` in the config `.yml`.
+ */
+export interface AuthConfig extends OIDCControllerConfig {
+  store: AuthenticationStoreConfig;
+}
+
+/**
  * The joint config of the `auth` and `middlewares` (plural intended) sections
- * for `oidc` of the config `.yml`.
+ * for `oidc` in the config `.yml`.
  */
 export interface VerdaccioOIDCPluginConfig {
-  auth: {};
-  middleware: {};
+  auth: AuthConfig;
+  middleware: MiddlewareConfig;
 }
 
 export class VerdaccioOIDCPlugin
@@ -40,11 +51,15 @@ export class VerdaccioOIDCPlugin
     IPluginMiddleware<{}> {
   static instances = new WeakMap<VerdaccioConfig, VerdaccioOIDCPlugin>();
 
-  private config: VerdaccioOIDCPluginConfig;
-  private verdaccioConfig: VerdaccioConfig;
+  public readonly config: VerdaccioOIDCPluginConfig;
+  public readonly verdaccioConfig: VerdaccioConfig;
 
-  private logger: Logger;
-  private middleware!: VerdaccioOIDCMiddleware;
+  public readonly logger: Logger;
+  public readonly oidcController: OIDCController;
+  public readonly authenticationStore: AuthenticationStore;
+  private middleware!: ReturnType<typeof middleware>;
+
+  public readonly ready: Promise<true>;
 
   constructor(
     config: VerdaccioOIDCPluginConfig,
@@ -53,6 +68,20 @@ export class VerdaccioOIDCPlugin
     this.config = config;
     this.verdaccioConfig = verdaccioConfig;
     this.logger = logger;
+
+    this.oidcController = new OIDCController({
+      config: this.config.auth,
+      logger
+    });
+    this.authenticationStore = new AuthenticationStore({
+      config: this.config.auth.store,
+      logger
+    });
+
+    this.ready = Promise.all([
+      this.oidcController.ready,
+      this.authenticationStore.ready
+    ]).then(() => true as true);
   }
 
   /**
@@ -72,9 +101,7 @@ export class VerdaccioOIDCPlugin
    */
   @bind
   static createSingletonInstance(
-    config:
-      | VerdaccioOIDCPluginConfig['auth']
-      | VerdaccioOIDCPluginConfig['middleware'],
+    config: AuthConfig | MiddlewareConfig,
     options: VerdaccioPluginConfig
   ) {
     if (!this.instances.has(options.config)) {
@@ -112,12 +139,12 @@ export class VerdaccioOIDCPlugin
   }
 
   register_middlewares(
-    app: any,
-    auth: IBasicAuth<VerdaccioOIDCPlugin>,
+    app: ReturnType<typeof express>,
+    auth: IBasicAuth<VerdaccioPluginConfig>,
     storage: IStorageManager<VerdaccioPluginConfig>
   ): void {
-    this.middleware = new VerdaccioOIDCMiddleware();
-    app.use(this.middleware.callback());
+    this.middleware = middleware(this);
+    app.use(this.middleware);
   }
 
   @callbackify
