@@ -1,4 +1,4 @@
 /storage/**
-!/storage/.gitkeep
+!/storage/README.md
 
 /config.yml
