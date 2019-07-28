@@ -18,7 +18,8 @@
     "lint:js": "eslint --ext ts,js .",
     "lint:types": "tsc --noEmit",
     "load-config": "./dev/load-config.js",
-    "server": "verdaccio --config ./test-support/verdaccio-server/config.yml"
+    "server": "verdaccio --config ./test-support/verdaccio-server/config.yml",
+    "server:dev": "yarn load-config dev && nodemon -e ts -w ./ -x yarn server"
   },
   "devDependencies": {
     "@clark/eslint-config-node": "^1.4.1",
@@ -32,6 +33,7 @@
     "dotenv": "^8.0.0",
     "eslint": "^6.0.1",
     "hard-rejection": "^2.1.0",
+    "nodemon": "^1.19.1",
     "ts-node": "^8.3.0",
     "type-fest": "^0.6.0",
     "typescript": "^3.5.3",
