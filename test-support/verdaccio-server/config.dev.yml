@@ -23,9 +23,9 @@ web:
 
 auth:
   oidc:
-    issuerURL: http://localost:5267/metadata
-    clientID: 123456
-    clientSecret: abcdef
+    issuerURL: ${OIDC_ISSUER_URL}
+    clientID: ${OIDC_CLIENT_ID}
+    clientSecret: ${OIDC_CLIENT_SECRET}
     store:
       pendingAuthorizationTimeout: 60000
       adapter:
