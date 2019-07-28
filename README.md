@@ -9,3 +9,10 @@
 [![CLARK Open Source](https://img.shields.io/badge/CLARK-Open%20Source-%232B6CDE.svg)](https://www.clark.de/de/jobs)
 
 OpenID Connect authentication plugin for Verdaccio
+
+## Configuration
+
+**Further Reading:**
+
+- Verdaccio docs: [Configuration File](https://verdaccio.org/docs/en/configuration)
+- Exemplary configs: [`/test-support/verdaccio-server`](test-support/verdaccio-server)
