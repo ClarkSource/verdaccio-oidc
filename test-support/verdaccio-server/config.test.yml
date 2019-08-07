@@ -23,7 +23,7 @@ web:
 
 auth:
   oidc:
-    issuerURL: http://localhost:5267/metadata
+    issuerURL: http://localhost:5267/.well-known/openid-configuration
     clientID: 123456
     clientSecret: abcdef
     store:

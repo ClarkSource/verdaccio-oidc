@@ -1,0 +1,7 @@
+{
+  "name": "openid-provider",
+  "version": "0.0.0",
+  "description": "Test support OpenID provider",
+  "author": "Jan Buschtöns <jan.buschtoens@clark.de> (https://jan.buschtoens.me)",
+  "license": "ISC"
+}
