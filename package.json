@@ -22,7 +22,8 @@
     "server:verdaccio": "verdaccio --config ./test-support/verdaccio-server/config.yml",
     "server:openid-provider": "yarn --cwd ./test-support/openid-provider start",
     "server:env": "yarn load-config env && nodemon -e ts -w ./ -x yarn server:verdaccio",
-    "server:test": "concurrently -kn openid,verdaccio 'yarn server:openid-provider' 'yarn load-config test && nodemon -e ts -w ./ -x yarn server:verdaccio'"
+    "server:test": "concurrently -kn openid,verdaccio 'yarn server:openid-provider' 'yarn load-config test && nodemon -e ts -w ./ -x yarn server:verdaccio'",
+    "npm:login": "npm login --auth-type=sso --registry=http://localhost:5266/"
   },
   "devDependencies": {
     "@clark/eslint-config-node": "^1.4.1",
