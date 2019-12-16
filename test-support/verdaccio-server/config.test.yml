@@ -24,7 +24,7 @@ web:
 auth:
   oidc:
     issuerURL: http://localhost:5267/.well-known/openid-configuration
-    clientID: 123456
+    clientID: '123456'
     clientSecret: abcdef
     store:
       pendingAuthorizationTimeout: 60000

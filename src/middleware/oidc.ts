@@ -1,8 +1,10 @@
 import express, { Request } from 'express';
 import { wrap } from 'async-middleware';
 import bodyParser from 'body-parser';
+import { BadRequest } from 'http-errors';
 import { VerdaccioOIDCPlugin } from '../plugin';
 import { randomHex } from '../utils/random';
+import { buildURL } from '../utils/http';
 
 /**
  * Returns the full host with protocol from the `request`.
@@ -32,14 +34,22 @@ export function mountOIDC(
   app.use(
     '/-/oidc/authorize',
     wrap(async (req, res) => {
-      const authID: string =
-        req.query.authenticationInitializationToken || (await randomHex());
-      const authorizationFlow = oidcController.initializeAuthorization(authID);
-
-      if (req.query.authenticationInitializationToken) {
+      const { authenticationInitializationToken } = req.query;
+      if (!authenticationInitializationToken) {
+        throw new BadRequest(
+          'Missing authenticationInitializationToken query parameter'
+        );
       }
 
-      res.redirect(authorizationFlow.authorizationURL);
+      res.cookie(
+        'authenticationInitializationToken',
+        authenticationInitializationToken,
+        { httpOnly: true }
+      );
+
+      const callbackURL = buildURL(req, '/-/oidc/callback');
+      const authorizationURL = oidcController.getAuthorizationURL(callbackURL);
+      res.redirect(authorizationURL);
     })
   );
 
@@ -47,9 +57,20 @@ export function mountOIDC(
     '/-/oidc/callback',
     bodyParser.urlencoded({ extended: false }),
     wrap(async (req, res) => {
-      try {
-        await oidcController.handleCallback(req);
-      } catch {}
+      const { authenticationInitializationToken } = req.cookies;
+      if (!authenticationInitializationToken) {
+        throw new BadRequest(
+          'Missing authenticationInitializationToken cookie'
+        );
+      }
+
+      const tokenSet = await oidcController.handleCallback(req);
+      await authenticationStore.authenticate(
+        tokenSet,
+        authenticationInitializationToken
+      );
+
+      res.redirect('/');
     })
   );
 }

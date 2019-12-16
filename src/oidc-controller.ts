@@ -1,6 +1,7 @@
 import { Issuer, Client } from 'openid-client';
 import { Logger } from '@verdaccio/types';
 import { Request } from 'express';
+import { buildURL } from './utils/http';
 
 export interface OIDCControllerConfig {
   issuerURL: string;
@@ -12,8 +13,8 @@ export class OIDCController {
   private readonly config: OIDCControllerConfig;
   private readonly logger: Logger;
 
-  private issuer?: Issuer;
-  private client?: Client;
+  private issuer!: Issuer;
+  private client!: Client;
 
   public readonly ready: Promise<true>;
 
@@ -53,11 +54,18 @@ export class OIDCController {
     this.client = this.getClientFromIssuer(this.issuer);
   }
 
-  handleCallback(req: Request) {
-    throw new Error('Method not implemented.');
+  async handleCallback(req: Request) {
+    const params = this.client.callbackParams(req);
+    const redirectURI = buildURL(req, req.originalUrl);
+    const tokenSet = await this.client.callback(redirectURI, params);
+    return tokenSet;
   }
 
-  initializeAuthorization(authID: Promise<string>) {
-    throw new Error('Method not implemented.');
+  getAuthorizationURL(callbackURL: string) {
+    return this.client.authorizationUrl({
+      redirect_uri: callbackURL,
+      scope: 'openid profile groups email',
+      response_mode: 'form_post'
+    });
   }
 }

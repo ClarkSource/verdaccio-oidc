@@ -6,7 +6,8 @@ const oidc = new Provider('http://localhost:3000', {
   clients: [
     {
       client_id: '123456',
-      client_secret: 'abcdef'
+      client_secret: 'abcdef',
+      redirect_uris: ['http://localhost:5266/-/oidc/callback']
     }
   ]
 });
