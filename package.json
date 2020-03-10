@@ -43,7 +43,7 @@
     "ts-node": "^8.3.0",
     "type-fest": "^0.6.0",
     "typescript": "^3.5.3",
-    "verdaccio": "^4.1.0"
+    "verdaccio": "^4.4.4"
   },
   "dependencies": {
     "async-middleware": "^1.2.1",
