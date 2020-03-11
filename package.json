@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@clark/eslint-config-node": "^1.23.0",
-    "@clark/eslint-config-node-typescript": "^1.4.1",
+    "@clark/eslint-config-node-typescript": "^1.23.0",
     "@types/express": "^4.17.3",
     "@types/http-errors": "^1.6.3",
     "@types/node": "^13.9.0",
