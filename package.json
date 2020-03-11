@@ -35,7 +35,7 @@
     "@types/redis": "^2.8.16",
     "@verdaccio/types": "^9.3.0",
     "concurrently": "^4.1.1",
-    "dotenv": "^8.0.0",
+    "dotenv": "^8.2.0",
     "eslint": "^6.0.1",
     "hard-rejection": "^2.1.0",
     "nodemon": "^1.19.1",
