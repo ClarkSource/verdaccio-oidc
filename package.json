@@ -34,7 +34,7 @@
     "@types/openid-client": "^3.7.0",
     "@types/redis": "^2.8.16",
     "@verdaccio/types": "^9.3.0",
-    "concurrently": "^4.1.1",
+    "concurrently": "^5.1.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "hard-rejection": "^2.1.0",
