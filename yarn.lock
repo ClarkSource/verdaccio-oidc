@@ -3184,10 +3184,10 @@ object.values@^1.1.0:
     function-bind "^1.1.1"
     has "^1.0.3"
 
-oidc-provider@^6.23.1:
-  version "6.23.1"
-  resolved "https://registry.yarnpkg.com/oidc-provider/-/oidc-provider-6.23.1.tgz#db9c6f48f54d3dcab5920e2f066ecfc4ff2c0f93"
-  integrity sha512-coC5RklG5URnn+/4yP+wV4vDK7u0kfknzi1+lp5PBkJtDdQJj5qBCN4ept+tnXQLOOO9AEUBOWXIHar9cSLNkw==
+oidc-provider@^6.23.2:
+  version "6.23.2"
+  resolved "https://registry.yarnpkg.com/oidc-provider/-/oidc-provider-6.23.2.tgz#173609e5132278036fbb57ca2b8f2dadee94c6f1"
+  integrity sha512-jR5WqS4G4swndQVFuFEaTVVW5QaTrcMt0yDA957FYN+PHqkZ+qp1Xd7f4uxIR37K2vO9RtP7cK8vibyYJh+RCw==
   dependencies:
     "@koa/cors" "^3.0.0"
     "@types/koa" "^2.11.0"
