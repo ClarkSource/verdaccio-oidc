@@ -50,7 +50,7 @@
     "bind-decorator": "^1.0.11",
     "express": "^4.17.1",
     "http-errors": "^1.7.3",
-    "openid-client": "^3.2.2",
+    "openid-client": "^3.14.1",
     "p-defer": "^3.0.0",
     "p-props": "^3.1.0",
     "p-timeout": "^3.2.0",
