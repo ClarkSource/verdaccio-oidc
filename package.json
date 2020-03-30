@@ -30,7 +30,7 @@
     "@clark/eslint-config-node-typescript": "^1.24.1",
     "@types/express": "^4.17.3",
     "@types/http-errors": "^1.6.3",
-    "@types/node": "^13.9.6",
+    "@types/node": "^13.9.7",
     "@types/openid-client": "^3.7.0",
     "@types/redis": "^2.8.17",
     "@verdaccio/types": "^9.3.0",
