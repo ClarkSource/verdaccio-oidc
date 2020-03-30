@@ -25,15 +25,15 @@
   dependencies:
     eslint-plugin-import-helpers "^1.0.2"
 
-"@clark/eslint-config-node-typescript@^1.23.0":
-  version "1.23.0"
-  resolved "https://registry.yarnpkg.com/@clark/eslint-config-node-typescript/-/eslint-config-node-typescript-1.23.0.tgz#df4df798775dd58f3c5934ca4c7caeabf0cc7ca0"
-  integrity sha512-mZ18UxYNACfwB3oT6tkVnp0qvR6/Na6gmo/HpXfAH8uwjc69V5q3hi985feDQHP3DSBfRJ0nXN6xmj4cD8SWZw==
+"@clark/eslint-config-node-typescript@^1.24.0":
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/@clark/eslint-config-node-typescript/-/eslint-config-node-typescript-1.24.0.tgz#42220281a34ea744b99078e9c21b32609c93591a"
+  integrity sha512-9lHHMdxN2xiiNzG8flNnekbPIKdZqAFJ1zg+BRSLM4HvxlA8XB7ybpDARqd1juSuilIrAMS3V5PKoOdMdGc7pg==
   dependencies:
-    "@clark/eslint-config-node" "^1.23.0"
-    "@clark/eslint-config-typescript" "^1.23.0"
+    "@clark/eslint-config-node" "^1.24.0"
+    "@clark/eslint-config-typescript" "^1.24.0"
 
-"@clark/eslint-config-node@^1.23.0", "@clark/eslint-config-node@^1.24.0":
+"@clark/eslint-config-node@^1.24.0":
   version "1.24.0"
   resolved "https://registry.yarnpkg.com/@clark/eslint-config-node/-/eslint-config-node-1.24.0.tgz#515e3d33a5246d9dffebb27a869c778da1b5edf3"
   integrity sha512-nJKWJ8/XueBLRNfJsaIX86AAIZHZcaiUY1zmJA1rT612YdQ3IlH8ZcGf48tROBqEoEcZH8cyqGhlSQO9Q3Rqpg==
@@ -43,16 +43,16 @@
     eslint-plugin-node "^11.1.0"
     lodash.merge "^4.6.2"
 
-"@clark/eslint-config-typescript@^1.23.0":
-  version "1.23.0"
-  resolved "https://registry.yarnpkg.com/@clark/eslint-config-typescript/-/eslint-config-typescript-1.23.0.tgz#5d564bf24643f8fb324f559d7c0c36b4058acfff"
-  integrity sha512-mO/85luSChOK7Q4KAoIjXcrg82VASxeh+melzuhwz+LeXnl2txS1vrKs+ejpR9RnPIhy09+v54K8nCg0IA4Hew==
+"@clark/eslint-config-typescript@^1.24.0":
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/@clark/eslint-config-typescript/-/eslint-config-typescript-1.24.0.tgz#ba320bb72cef23d8109ba95a2bc278eafd39fd0f"
+  integrity sha512-9Mvq6Ed6TSoHL4I2ak+B5WJz5OmNUKZ6BTnsjDwSwgB+9le3VySVRjX8aNBGvLurWRZ833R3osI5dKnXsgfk/Q==
   dependencies:
-    "@clark/eslint-config" "^1.23.0"
-    "@typescript-eslint/eslint-plugin" "^2.21.0"
-    "@typescript-eslint/parser" "^2.21.0"
+    "@clark/eslint-config" "^1.24.0"
+    "@typescript-eslint/eslint-plugin" "^2.26.0"
+    "@typescript-eslint/parser" "^2.26.0"
 
-"@clark/eslint-config@^1.23.0", "@clark/eslint-config@^1.24.0":
+"@clark/eslint-config@^1.24.0":
   version "1.24.0"
   resolved "https://registry.yarnpkg.com/@clark/eslint-config/-/eslint-config-1.24.0.tgz#284e530626dc7bed6c348fcca90ed44da8a43127"
   integrity sha512-rMu6NKRVPDTHIFBdS+1FTjvvKFddSulGCvMljniIYSztnrS34YABMVdYtMPCLtOOoex45EWkN2TaUwN51E2sWw==
@@ -244,40 +244,40 @@
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.5.tgz#9da44ed75571999b65c37b60c9b2b88db54c585d"
   integrity sha512-SCcK7mvGi3+ZNz833RRjFIxrn4gI1PPR3NtuIS+6vMkvmsGjosqTJwRt5bAEFLRz+wtJMWv8+uOnZf2hi2QXTg==
 
-"@typescript-eslint/eslint-plugin@^2.21.0":
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.23.0.tgz#aa7133bfb7b685379d9eafe4ae9e08b9037e129d"
-  integrity sha512-8iA4FvRsz8qTjR0L/nK9RcRUN3QtIHQiOm69FzV7WS3SE+7P7DyGGwh3k4UNR2JBbk+Ej2Io+jLAaqKibNhmtw==
+"@typescript-eslint/eslint-plugin@^2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.26.0.tgz#04c96560c8981421e5a9caad8394192363cc423f"
+  integrity sha512-4yUnLv40bzfzsXcTAtZyTjbiGUXMrcIJcIMioI22tSOyAxpdXiZ4r7YQUU8Jj6XXrLz9d5aMHPQf5JFR7h27Nw==
   dependencies:
-    "@typescript-eslint/experimental-utils" "2.23.0"
-    eslint-utils "^1.4.3"
+    "@typescript-eslint/experimental-utils" "2.26.0"
     functional-red-black-tree "^1.0.1"
     regexpp "^3.0.0"
     tsutils "^3.17.1"
 
-"@typescript-eslint/experimental-utils@2.23.0":
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-2.23.0.tgz#5d2261c8038ec1698ca4435a8da479c661dc9242"
-  integrity sha512-OswxY59RcXH3NNPmq+4Kis2CYZPurRU6mG5xPcn24CjFyfdVli5mySwZz/g/xDbJXgDsYqNGq7enV0IziWGXVQ==
+"@typescript-eslint/experimental-utils@2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-2.26.0.tgz#063390c404d9980767d76274df386c0aa675d91d"
+  integrity sha512-RELVoH5EYd+JlGprEyojUv9HeKcZqF7nZUGSblyAw1FwOGNnmQIU8kxJ69fttQvEwCsX5D6ECJT8GTozxrDKVQ==
   dependencies:
     "@types/json-schema" "^7.0.3"
-    "@typescript-eslint/typescript-estree" "2.23.0"
+    "@typescript-eslint/typescript-estree" "2.26.0"
     eslint-scope "^5.0.0"
+    eslint-utils "^2.0.0"
 
-"@typescript-eslint/parser@^2.21.0":
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-2.23.0.tgz#f3d4e2928ff647fe77fc2fcef1a3534fee6a3212"
-  integrity sha512-k61pn/Nepk43qa1oLMiyqApC6x5eP5ddPz6VUYXCAuXxbmRLqkPYzkFRKl42ltxzB2luvejlVncrEpflgQoSUg==
+"@typescript-eslint/parser@^2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-2.26.0.tgz#385463615818b33acb72a25b39c03579df93d76f"
+  integrity sha512-+Xj5fucDtdKEVGSh9353wcnseMRkPpEAOY96EEenN7kJVrLqy/EVwtIh3mxcUz8lsFXW1mT5nN5vvEam/a5HiQ==
   dependencies:
     "@types/eslint-visitor-keys" "^1.0.0"
-    "@typescript-eslint/experimental-utils" "2.23.0"
-    "@typescript-eslint/typescript-estree" "2.23.0"
+    "@typescript-eslint/experimental-utils" "2.26.0"
+    "@typescript-eslint/typescript-estree" "2.26.0"
     eslint-visitor-keys "^1.1.0"
 
-"@typescript-eslint/typescript-estree@2.23.0":
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-2.23.0.tgz#d355960fab96bd550855488dcc34b9a4acac8d36"
-  integrity sha512-pmf7IlmvXdlEXvE/JWNNJpEvwBV59wtJqA8MLAxMKLXNKVRC3HZBXR/SlZLPWTCcwOSg9IM7GeRSV3SIerGVqw==
+"@typescript-eslint/typescript-estree@2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-2.26.0.tgz#d8132cf1ee8a72234f996519a47d8a9118b57d56"
+  integrity sha512-3x4SyZCLB4zsKsjuhxDLeVJN6W29VwBnYpCsZ7vIdPel9ZqLfIZJgJXO47MNUkurGpQuIBALdPQKtsSnWpE1Yg==
   dependencies:
     debug "^4.1.1"
     eslint-visitor-keys "^1.1.0"
