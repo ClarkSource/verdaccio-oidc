@@ -3160,10 +3160,10 @@ object.values@^1.1.0:
     function-bind "^1.1.1"
     has "^1.0.3"
 
-oidc-provider@^6.23.3:
-  version "6.23.3"
-  resolved "https://registry.yarnpkg.com/oidc-provider/-/oidc-provider-6.23.3.tgz#5556c51800cf8a417fe0f1e71ba561b3c289838a"
-  integrity sha512-ZTtLXUaci0alX+MxvXhAr9GwzdalI5AU5qt6CWklTzw6LNi5fecS9rKxUq2fr5WOnVUYTUKlG+7EdxPg6iclyA==
+oidc-provider@^6.23.4:
+  version "6.23.4"
+  resolved "https://registry.yarnpkg.com/oidc-provider/-/oidc-provider-6.23.4.tgz#d9a1c1729de5df8febeefed5a90b125e9c285cd1"
+  integrity sha512-U0iIidAUKIKBBRAeI4JywciiFHDcQp3ueFsDMQBJB/u3V1Egc/pnDXyiXKcnkaUCuIYiQXWzcxrwQyz0x36Q8Q==
   dependencies:
     "@koa/cors" "^3.0.0"
     "@types/koa" "^2.11.0"
