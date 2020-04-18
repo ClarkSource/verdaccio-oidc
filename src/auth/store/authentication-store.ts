@@ -3,11 +3,13 @@ import {
   StoreAdapterConfig,
   StoreAdapter,
   AuthenticationState,
-  PendingUser
+  PendingUser,
+  User
 } from './store-adapter';
 import { getAdapter } from '.';
 import { randomHex } from '../../utils/random';
 import pProps from 'p-props';
+import { TokenSet } from 'openid-client';
 
 export interface AuthenticationStoreConfig {
   adapter: Record<string, StoreAdapterConfig | null>;
@@ -53,6 +55,14 @@ function createAdapterFromConfig({ adapter }: AuthenticationStoreConfig) {
   return new Adapter(adapterConfig || undefined);
 }
 
+export class AuthenticationError extends Error {}
+export class AuthenticationNotFoundError extends Error {}
+export class AuthenticationTimeoutError extends AuthenticationError {}
+export class AuthenticationFailedError extends AuthenticationError {}
+export class AuthenticationPendingError extends AuthenticationError {}
+export class AuthenticationRevokedError extends AuthenticationError {}
+export class AuthenticationUnexpectedStateError extends AuthenticationError {}
+
 function stateToError(state: AuthenticationState) {
   switch (state) {
     case AuthenticationState.PENDING:
@@ -68,6 +78,11 @@ function stateToError(state: AuthenticationState) {
         `Unexpected authentication state: ${state}`
       );
   }
+}
+
+interface UserSearchCriteria {
+  npmToken?: string;
+  authenticationInitializationToken?: string;
 }
 
 export class AuthenticationStore {
@@ -97,6 +112,19 @@ export class AuthenticationStore {
     await this.adapter.boot();
   }
 
+  private async findUser({
+    npmToken,
+    authenticationInitializationToken
+  }: UserSearchCriteria): Promise<User | null> {
+    if (npmToken) return this.adapter.findUserByNPMToken(npmToken);
+    if (authenticationInitializationToken)
+      return this.adapter.findUserByAuthenticationInitializationToken(
+        authenticationInitializationToken
+      );
+
+    throw new TypeError('Missing required parameter');
+  }
+
   async createPendingAuthentication() {
     return this.adapter.createUser({
       ...(await pProps({
@@ -107,8 +135,8 @@ export class AuthenticationStore {
     }) as Promise<PendingUser>;
   }
 
-  async isPendingAuthentication(npmToken: string) {
-    const user = await this.adapter.findUserByNPMToken(npmToken);
+  async isPendingAuthentication(userSearchCriteria: UserSearchCriteria) {
+    const user = await this.findUser(userSearchCriteria);
     if (!user) return false;
 
     switch (user.state) {
@@ -145,12 +173,24 @@ export class AuthenticationStore {
       }
     }
   }
-}
 
-export class AuthenticationError extends Error {}
-export class AuthenticationNotFoundError extends Error {}
-export class AuthenticationTimeoutError extends AuthenticationError {}
-export class AuthenticationFailedError extends AuthenticationError {}
-export class AuthenticationPendingError extends AuthenticationError {}
-export class AuthenticationRevokedError extends AuthenticationError {}
-export class AuthenticationUnexpectedStateError extends AuthenticationError {}
+  async authenticate(
+    tokenSet: TokenSet,
+    authenticationInitializationToken?: string
+  ) {
+    if (authenticationInitializationToken) {
+      if (
+        !(await this.isPendingAuthentication({
+          authenticationInitializationToken
+        }))
+      ) {
+        throw new AuthenticationFailedError();
+      }
+
+      const user = (await this.adapter.findUserByAuthenticationInitializationToken(
+        authenticationInitializationToken
+      ))!;
+      this.adapter.updateUser({ ...user });
+    }
+  }
+}

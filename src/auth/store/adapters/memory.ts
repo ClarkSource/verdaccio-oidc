@@ -40,6 +40,21 @@ export class MemoryAdapter implements StoreAdapter {
     return user;
   }
 
+  updateUser(data: Partial<User> & Pick<User, 'id'>): Promise<User> {
+    const user = { ...data, id: await randomHex(8) };
+    this.userByID.set(user.id, user);
+    this.usersByNpmToken.set(user.npmToken, user);
+    return user;
+  }
+
+  private setUser(data: data: Partial<User> & Pick<User, 'id' | 'npmToken'>) {}
+
+  findUserByAuthenticationInitializationToken(
+    authenticationInitializationToken: string
+  ): Promise<User | null> {
+    throw new Error('Method not implemented.');
+  }
+
   async findUserByNPMToken(npmToken: string): Promise<User | null> {
     if (!this.usersByNpmToken.has(npmToken)) {
       throw new Error(`Unknown user by npm token: ${npmToken.slice(0, 8)}`);

@@ -1,47 +1,17 @@
 import express, { Request } from 'express';
 import { wrap } from 'async-middleware';
-import { HttpError, BadRequest, Unauthorized, Forbidden } from 'http-errors';
+import { HttpError, Unauthorized, Forbidden } from 'http-errors';
 import { VerdaccioOIDCPlugin } from '../plugin';
 import { optionalTimeout } from '../utils/promises';
 import {
   AuthenticationTimeoutError,
   AuthenticationFailedError
 } from '../auth/store';
-
-/**
- * Returns the full host with protocol from the `request`.
- * Respects the `x-forwarded-proto` HTTP header.
- *
- * @example 'https://registry.example.com'
- */
-function getProtocolAndHost(request: Request) {
-  const protocol = request.headers['x-forwarded-proto'] || request.protocol;
-  const { host } = request.headers;
-  return `${protocol}://${host}`;
-}
-
-/**
- * Extracts the Bearer Authentication token for the HTTP headers of `request`.
- */
-function getBearerTokenFromRequest(request: Request) {
-  const { authorization } = request.headers;
-  if (!authorization)
-    throw new BadRequest(`Missing the 'Authorization' header.`);
-
-  const prefix = 'Bearer ';
-
-  if (!authorization.startsWith(prefix))
-    throw new BadRequest(
-      `'Authorization' header is not using Bearer Authentication.`
-    );
-
-  const token = authorization.slice(prefix.length).trim();
-
-  if (token.length === 0)
-    throw new BadRequest(`'Authorization' header is empty.`);
-
-  return token;
-}
+import {
+  getProtocolAndHost,
+  getBearerTokenFromRequest,
+  buildURL
+} from '../utils/http';
 
 /**
  * Turns expected authentication flow errors into HTTP status code errors and
@@ -85,7 +55,7 @@ export function mountNPM(
     config: { middleware: config }
   } = plugin;
 
-  const getOIDCInitializationURL = (
+  const buildOIDCInitializationPath = (
     authenticationInitializationToken: string
   ) =>
     `/-/oidc/authorize?authenticationInitializationToken=${encodeURIComponent(
@@ -128,9 +98,10 @@ export function mountNPM(
 
       res.send({
         token: npmToken,
-        sso:
-          getProtocolAndHost(req) +
-          getOIDCInitializationURL(authenticationInitializationToken)
+        sso: buildURL(
+          req,
+          buildOIDCInitializationPath(authenticationInitializationToken)
+        )
       });
     })
   );

@@ -33,7 +33,12 @@ export interface StoreAdapter {
     authenticationInitializationToken: string;
   }): Promise<User>;
 
+  updateUser(data: Partial<User> & Pick<User, 'id'>): Promise<User>;
+
   findUserByNPMToken(npmToken: string): Promise<User | null>;
+  findUserByAuthenticationInitializationToken(
+    authenticationInitializationToken: string
+  ): Promise<User | null>;
 
   subscribeStateChange(id: string): StateChangeSubscription;
 }
